@@ -3,6 +3,8 @@ import "./pathseg.js";
 import { createEngine } from "../../shared/engine.js";
 import "./decomp.js";
 
+
+
 const { renderer, input, math, run, finish } = createEngine();
 const { ctx, canvas } = renderer;
 
@@ -179,6 +181,7 @@ export default function sketch() {
           if (bodies.length > 0 && bodies[bodies.length - 1].position.y >= height / 2 && !restart) {
             const mainBody = bodies[bodies.length - 1];
             Matter.Body.setStatic(mainBody, true);
+            window.dispatchEvent(new CustomEvent("kick"));
           }
         });
       
@@ -242,6 +245,12 @@ export default function sketch() {
   
 
   function addShapes(e){
+    console.log(Tone.context.state);
+    if(Tone.context.state !== 'running'){
+      
+      Tone.start(0);
+      console.log("started");
+    }
     addSVGShape(
       e.clientX ,
       e.clientY 
@@ -250,6 +259,8 @@ export default function sketch() {
   }
 
   document.addEventListener("click", addShapes);
+
+    
 
   let isShown = false;
 
@@ -275,6 +286,8 @@ document.addEventListener("show", () => {
     });
 
     // stop animation when the last body's y position is at height/2
+
+    
    
 
   // context for MatterTools.Demo

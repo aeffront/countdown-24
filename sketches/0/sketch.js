@@ -1,5 +1,6 @@
 
 import { createEngine } from "../../shared/engine.js";
+
 const { renderer, input, math, run, finish } = createEngine();
 const { ctx, canvas } = renderer;
 
@@ -73,6 +74,7 @@ async function classifyCanvas(img) {
     const imageTensor = preprocessCanvas(img);
     const predictions = await model.predict(imageTensor).data();
     const label = predictions.indexOf(Math.max(...predictions));
+    console.log(label);
 
 
 
@@ -161,18 +163,25 @@ function draw(e){
 }
 
 function success(){
+    window.dispatchEvent(new CustomEvent("success"));
     console.log("Success!");
     canvas.style.filter = "invert(100%)";
+    window.dispatchEvent(new CustomEvent("flash"));
     setTimeout(()=>{
         canvas.style.filter = "invert(0%)";
+        window.dispatchEvent(new CustomEvent("flash"));
        setTimeout(()=>{ canvas.style.filter = "invert(100%)";
+        window.dispatchEvent(new CustomEvent("flash"));
         ctx.fillStyle = "black";
         ctx.fillRect(0,0,canvas.width,canvas.height);
         setTimeout(()=>{canvas.style.filter = "invert(0%)";
+            window.dispatchEvent(new CustomEvent("flash"));
         setTimeout(()=>{
             canvas.style.filter = "invert(100%)";
+            window.dispatchEvent(new CustomEvent("flash"));
             setTimeout(()=>{
                 canvas.style.filter = "invert(0%)";
+                window.dispatchEvent(new CustomEvent("flash"));
                 ctx.fillStyle = "black";
         ctx.fillRect(0,0,canvas.width,canvas.height);
         ctx.fillStyle = "white";
@@ -182,12 +191,16 @@ function success(){
         ctx.fillText("0",canvas.width/2,canvas.height/2);
         setTimeout(()=>{
             canvas.style.filter = "invert(100%)";
+            window.dispatchEvent(new CustomEvent("flash"));
             setTimeout(()=>{
                 canvas.style.filter = "invert(0%)";
+                window.dispatchEvent(new CustomEvent("flash"));
                 setTimeout(()=>{
                     canvas.style.filter = "invert(100%)";
+                    window.dispatchEvent(new CustomEvent("flash"));
                     setTimeout(()=>{
                         canvas.style.filter = "invert(0%)";
+                        window.dispatchEvent(new CustomEvent("flash"));
                         ctx.fillStyle = "black";
                         ctx.fillRect(0,0,canvas.width,canvas.height);
                         finish();
@@ -206,14 +219,18 @@ function success(){
 }
 
 function fail(){
-
+    window.dispatchEvent(new CustomEvent("fail"));
     canvas.style.filter = "invert(100%)";
+    window.dispatchEvent(new CustomEvent("flash"));
     setTimeout(()=>{
         canvas.style.filter = "invert(0%)";
+        window.dispatchEvent(new CustomEvent("flash"));
         setTimeout(()=>{
             canvas.style.filter = "invert(100%)";
+            window.dispatchEvent(new CustomEvent("flash"));
             setTimeout(()=>{
                 canvas.style.filter = "invert(0%)";
+                window.dispatchEvent(new CustomEvent("flash"));
                 ctx.fillStyle = "black";
         ctx.fillRect(0,0,canvas.width,canvas.height);
         lines = [];
@@ -225,6 +242,7 @@ function fail(){
 }
 
 document.addEventListener("mousedown",(e)=>{
+    Tone.start();
     points.push({x: e.clientX, y: e.clientY});
     draw(e);
     document.addEventListener("mousemove",draw);
@@ -240,10 +258,8 @@ document.addEventListener("mouseup",(e)=>{
     
 
 });
-
-document.addEventListener("keydown",keyPressed);
-
 }
+
 
 
 export { sketch }

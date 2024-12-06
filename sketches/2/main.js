@@ -9,23 +9,13 @@ import {init} from "./audio.js";
 // console.log(mainDiv)
 // mainDiv.addEventListener('click', (e) => { console.log("sakjdbeajkfb") });
 
-drawBaseImage();
-init()
-
-    document.addEventListener("canvasReady", () => {
-      import("./sketch.js").then((module) => {
-        const sketch = module.default;
-        new p5((p) => {
-          sketch(p);
-        });
-      });
-    });
 
 
 window.addEventListener("message", async (event) => {
   if (event.data === "started") {
     console.log("strating 2");
     drawBaseImage();
+    init();
 
     document.addEventListener("canvasReady", () => {
       import("./sketch.js").then((module) => {

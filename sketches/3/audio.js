@@ -109,9 +109,9 @@ function init(){
     Source1.envelope.decay = 0.1;
     Source1.envelope.sustain = 0.7;
     Source1.envelope.release = 1.;
-    Source1.gain.gain.value = 2;
+    Source1.gain.gain.value = 4.;
     Source1.filter.type = "lowpass";
-    Source1.filter.frequency.value = 200;
+    Source1.filter.frequency.value = 400;
     Source1.filter.rolloff = -12;
     
 
@@ -166,26 +166,7 @@ function init(){
 }
 
 
-function updateSeq(sequence){
-    
-    let notes = sequence.events;
-    console.log(notes);
-    notes.forEach((note, i) => {
-        console.log(note);
-        if(seqButtons[i].classList.contains('active')){
-            console.log("active");
-            notes[i] = "D3";
-        }
-        else{
-            notes[i] = "";
-        }
-        console.log(notes);
-    
-    Source1.seq.events = notes;
-    //console.log(Source1.seq.events);
-    });
 
-}
 
 export{init}
 

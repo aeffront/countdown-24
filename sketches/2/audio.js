@@ -109,9 +109,9 @@ function init(){
     Source1.envelope.decay = 0.001;
     Source1.envelope.sustain = 0.7;
     Source1.envelope.release = 0;
-    Source1.gain.gain.value = 2;
+    Source1.gain.gain.value = 2.;
     Source1.filter.type = "lowpass";
-    Source1.filter.frequency.value = 200;
+    Source1.filter.frequency.value = 400;
     Source1.filter.rolloff = -12;
 
     const reverbe = new Tone.Reverb(2).toDestination();
